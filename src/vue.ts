@@ -87,7 +87,8 @@ function defineDep<T, S>( api: WithVue<StoreApi<T>>, selection?:(state: T) => S,
       if(!executeEqualityFn(state, prevState, selection, equalityFn)) return
       res.value = (selection ? selection(state) : state) as Vue.UnwrapRef<S>
     });
-    return Vue.readonly(res);
+    // @ts-ignore
+    return Vue.readonly(res.value);
   }
 }
 
