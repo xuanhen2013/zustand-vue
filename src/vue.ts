@@ -81,20 +81,13 @@ function defineDep<T, S>( api: WithVue<StoreApi<T>>, selection?:(state: T) => S,
   
   if(typeof store === 'undefined'){
     return Vue.ref(undefined)
-  } else if (isObject) {
-    if (typeof Proxy === 'undefined') {
-      defineReactive<T, typeof store>(store, subscribeCache, api, selection, equalityFn);
-      return Vue.reactive(store as object);
-    }
-    return defineProxy<T, typeof store>(store, subscribeCache, api, selection, equalityFn)
   } else {
     const res = Vue.ref(store);
     subscribeCache.default = api.subscribe((state, prevState) => {
       if(!executeEqualityFn(state, prevState, selection, equalityFn)) return
       res.value = (selection ? selection(state) : state) as Vue.UnwrapRef<S>
     });
-    // @ts-ignore
-    return Vue.readonly(isFunction ? res.value : res);
+    return Vue.readonly(res);
   }
 }
 
