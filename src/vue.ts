@@ -70,6 +70,13 @@ function defineDep<T, S>( api: WithVue<StoreApi<T>>, selection?:(state: T) => S,
     );
   }
 
+  if (Vue.getCurrentInstance()) {
+    Vue.onScopeDispose(() => {
+      for (const key in subscribeCache) {
+        typeof subscribeCache[key] === 'function' && subscribeCache[key]();
+      }
+    })
+  }
   
   if(typeof store === 'undefined'){
     return Vue.ref(undefined)
@@ -81,7 +88,7 @@ function defineDep<T, S>( api: WithVue<StoreApi<T>>, selection?:(state: T) => S,
     return defineProxy<T, typeof store>(store, subscribeCache, api, selection, equalityFn)
   } else {
     const res = Vue.ref(store);
-    api.subscribe((state, prevState) => {
+    subscribeCache.default = api.subscribe((state, prevState) => {
       if(!executeEqualityFn(state, prevState, selection, equalityFn)) return
       res.value = (selection ? selection(state) : state) as Vue.UnwrapRef<S>
     });
