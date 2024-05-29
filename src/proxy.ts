@@ -27,7 +27,7 @@ export function defineProxy<T, S>(
       reactiveStore[prop as keyof typeof reactiveStore] = selection ? selection(state)[prop as keyof S] : state[prop as keyof T];
     });
   }
-  return reactiveStore;
+  return Vue.readonly(reactiveStore);
 };
 
 export  function defineSet<T extends TObject, S> (
