@@ -1,14 +1,14 @@
 {
-  "name": "zustand-vue",
-  "version": "1.0.0-beta.20",
+  "name": "zustand-vue-ld",
+  "version": "1.0.0-beta.21",
   "description": "State management for vue based on zustand",
   "main": "build/index.js",
   "module": "build/index.es.js",
   "types": "build/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx rollup -c --bundleConfigAsCjs",
-    "dev": "npx rollup -c -w --development --bundleConfigAsCjs"
+    "build": "rollup -c --bundleConfigAsCjs",
+    "dev": "rollup -c -w --development --bundleConfigAsCjs"
   },
   "sideEffects": false,
   "repository": {
@@ -46,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "eslint": "^8.29.0",
+    "rollup": "^4.18.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-polyfill": "^4.0.0",
